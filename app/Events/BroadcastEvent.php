@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use Carbon\Carbon;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -33,14 +34,14 @@ class BroadcastEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        // return new PrivateChannel('App.User.1');
         return new Channel('test-event');
     }
 
     public function broadcastWith()
     {
         return [
-            'key' => '這裡是應該收到的值',
+            'info' => $this->message,
+            'time' => Carbon::now()->toDateTimeString(),
         ];
     }
 }

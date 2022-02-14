@@ -23,6 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        broadcast(new \App\Events\BroadcastEvent());
+
         return view('home');
     }
 }

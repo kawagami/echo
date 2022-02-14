@@ -30,7 +30,7 @@ import Sender from './components/Sender';
  */
 
 const app = new Vue({
-    el: '#app',
+    el: '#echo',
     components: {
         Sender,
     }

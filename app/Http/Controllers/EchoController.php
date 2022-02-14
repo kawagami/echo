@@ -8,7 +8,8 @@ class EchoController extends Controller
 {
     public function send(Request $request)
     {
+        broadcast(new \App\Events\BroadcastEvent($request->message));
         // return 'send';
-        return $request->message;
+        return 'hope broadcast success';
     }
 }
