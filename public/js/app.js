@@ -1980,13 +1980,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       message: "",
-      historyMessages: [{
-        message: "訊息1",
-        user: "會員一"
-      }, {
-        message: "訊息2",
-        user: "會員二"
-      }]
+      historyMessages: []
     };
   },
   methods: {
@@ -2006,17 +2000,35 @@ __webpack_require__.r(__webpack_exports__);
         message: newMessage,
         user: "\u6703\u54E1".concat(newMessage)
       };
-      this.historyMessages.push(send);
       axios.post("/send", {
         message: newMessage
+      }).then(function (e) {
+        console.log("axios send 回來的訊息");
+        console.log(e); // this.historyMessages.push(send);
+        // console.log(this.historyMessages);
+      });
+    },
+    getMessages: function getMessages() {
+      var _this = this;
+
+      axios.post("/get", {// message: newMessage,
+      }).then(function (e) {
+        console.log("axios get 回來的訊息");
+        console.log(e);
+        _this.historyMessages = e.data;
       });
     }
   },
   mounted: function mounted() {
+    var _this2 = this;
+
     var that = this; // 12. 创建 Echo 监听
 
     Echo.channel("test-event").listen("BroadcastEvent", function (e) {
-      console.log(e);
+      // console.log(e);
+      _this2.getMessages(); // // 顯示最後一筆訊息
+      // console.log(this.historyMessages.slice(-1)[0].message);
+
     }); // Echo.join(`test-event`)
     //     .here((users) => {
     //         //
@@ -6411,7 +6423,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.container[data-v-9414b440] {\n    width: 100vh;\n    height: 100%;\n    display: flex;\n    flex-wrap: wrap;\n}\n.message-box[data-v-9414b440] {\n    width: 100%;\n    height: 400px;\n    display: flex;\n    flex-direction: column;\n    justify-content: flex-end;\n    overflow-y: scroll;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-9414b440] {\n    width: 100vh;\n    height: 100%;\n    display: flex;\n    flex-wrap: wrap;\n}\n.message-box[data-v-9414b440] {\n    width: 100%;\n    height: 400px;\n    display: flex;\n    flex-direction: column-reverse;\n    justify-content: flex-start;\n    overflow-y: scroll;\n}\n", ""]);
 
 // exports
 
@@ -39901,7 +39913,7 @@ var render = function () {
           return _c("div", { key: index, staticClass: "his-mes" }, [
             _vm._v(
               "\n                " +
-                _vm._s(item.user) +
+                _vm._s(item.user.name) +
                 " : " +
                 _vm._s(item.message) +
                 "\n            "

@@ -30,6 +30,7 @@ Route::get('/', function () {
 //     return response('OK');
 // });
 Route::post('/send', [\App\Http\Controllers\EchoController::class, 'send']);
+Route::post('/get', [\App\Http\Controllers\EchoController::class, 'get']);
 
 Auth::routes();
 

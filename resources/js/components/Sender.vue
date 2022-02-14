@@ -9,8 +9,8 @@
     width: 100%;
     height: 400px;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
     overflow-y: scroll;
 }
 </style>
@@ -24,7 +24,7 @@
                     v-for="(item, index) in historyMessages"
                     :key="index"
                 >
-                    {{ item.user }} : {{ item.message }}
+                    {{ item.user.name }} : {{ item.message }}
                 </div>
             </div>
             <input type="text" v-model="message" />
@@ -38,16 +38,7 @@ export default {
     data() {
         return {
             message: "",
-            historyMessages: [
-                {
-                    message: "訊息1",
-                    user: "會員一",
-                },
-                {
-                    message: "訊息2",
-                    user: "會員二",
-                },
-            ],
+            historyMessages: [],
         };
     },
     methods: {
@@ -65,17 +56,40 @@ export default {
                 message: newMessage,
                 user: `會員${newMessage}`,
             };
-            this.historyMessages.push(send);
-            axios.post("/send", {
-                message: newMessage,
-            });
+            axios
+                .post("/send", {
+                    message: newMessage,
+                })
+                .then((e) => {
+                    console.log("axios send 回來的訊息");
+                    console.log(e);
+
+                    // this.historyMessages.push(send);
+                    // console.log(this.historyMessages);
+                });
+        },
+        getMessages() {
+            axios
+                .post("/get", {
+                    // message: newMessage,
+                })
+                .then((e) => {
+                    console.log("axios get 回來的訊息");
+                    console.log(e);
+                    this.historyMessages = e.data;
+                });
         },
     },
     mounted() {
         let that = this;
         // 12. 创建 Echo 监听
         Echo.channel("test-event").listen("BroadcastEvent", (e) => {
-            console.log(e);
+            // console.log(e);
+
+            this.getMessages();
+
+            // // 顯示最後一筆訊息
+            // console.log(this.historyMessages.slice(-1)[0].message);
         });
         // Echo.join(`test-event`)
         //     .here((users) => {
