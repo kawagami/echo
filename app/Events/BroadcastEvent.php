@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Message;
 use Carbon\Carbon;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -40,8 +41,9 @@ class BroadcastEvent implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'info' => $this->message,
-            'time' => Carbon::now()->toDateTimeString(),
+            'info'    => $this->message,
+            'message' => Message::with('user')->latest()->take(20)->get(),
+            'time'    => Carbon::now()->toDateTimeString(),
         ];
     }
 }

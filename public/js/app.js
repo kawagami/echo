@@ -2002,9 +2002,9 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post("/send", {
         message: newMessage
-      }).then(function (e) {
-        console.log("axios send 回來的訊息");
-        console.log(e); // this.historyMessages.push(send);
+      }).then(function (e) {// console.log("axios send 回來的訊息");
+        // console.log(e);
+        // this.historyMessages.push(send);
         // console.log(this.historyMessages);
       });
     },
@@ -2013,8 +2013,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post("/get", {// message: newMessage,
       }).then(function (e) {
-        console.log("axios get 回來的訊息");
-        console.log(e);
+        // console.log("axios get 回來的訊息");
+        // console.log(e);
         _this.historyMessages = e.data;
       });
     }
@@ -2022,13 +2022,15 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this2 = this;
 
-    var that = this; // 12. 创建 Echo 监听
+    this.getMessages(); // 創建 Echo 監聽
 
     Echo.channel("test-event").listen("BroadcastEvent", function (e) {
-      // console.log(e);
-      _this2.getMessages(); // // 顯示最後一筆訊息
+      console.log("listen 的 e 資料");
+      console.log(e);
+      _this2.historyMessages = e.message; // // 有變動的時候取得訊息
+      // this.getMessages();
+      // // 顯示最後一筆訊息
       // console.log(this.historyMessages.slice(-1)[0].message);
-
     }); // Echo.join(`test-event`)
     //     .here((users) => {
     //         //

@@ -61,9 +61,8 @@ export default {
                     message: newMessage,
                 })
                 .then((e) => {
-                    console.log("axios send 回來的訊息");
-                    console.log(e);
-
+                    // console.log("axios send 回來的訊息");
+                    // console.log(e);
                     // this.historyMessages.push(send);
                     // console.log(this.historyMessages);
                 });
@@ -74,19 +73,24 @@ export default {
                     // message: newMessage,
                 })
                 .then((e) => {
-                    console.log("axios get 回來的訊息");
-                    console.log(e);
+                    // console.log("axios get 回來的訊息");
+                    // console.log(e);
                     this.historyMessages = e.data;
                 });
         },
     },
     mounted() {
-        let that = this;
-        // 12. 创建 Echo 监听
-        Echo.channel("test-event").listen("BroadcastEvent", (e) => {
-            // console.log(e);
+        this.getMessages();
 
-            this.getMessages();
+        // 創建 Echo 監聽
+        Echo.channel("test-event").listen("BroadcastEvent", (e) => {
+            console.log("listen 的 e 資料");
+            console.log(e);
+
+            this.historyMessages = e.message;
+
+            // // 有變動的時候取得訊息
+            // this.getMessages();
 
             // // 顯示最後一筆訊息
             // console.log(this.historyMessages.slice(-1)[0].message);
