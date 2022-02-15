@@ -29,10 +29,12 @@ Route::get('/', function () {
 //     broadcast(new \App\Events\BroadcastEvent());
 //     return response('OK');
 // });
-Route::post('/message/sendMessage', [\App\Http\Controllers\MessageController::class, 'sendMessage']);
-Route::post('/message/getMessages', [\App\Http\Controllers\MessageController::class, 'getMessages']);
+Route::post('/message/send-message', [\App\Http\Controllers\MessageController::class, 'sendMessage']);
+Route::get('/message/get-messages', [\App\Http\Controllers\MessageController::class, 'getMessages']);
 
-Route::post('/channel/channels', [\App\Http\Controllers\ChannelController::class, 'channels']);
+Route::get('/channel/get-channels', [\App\Http\Controllers\ChannelController::class, 'getChannels']);
+
+Route::get('/user/get-id', [\App\Http\Controllers\UserController::class, 'getId']);
 
 Auth::routes();
 

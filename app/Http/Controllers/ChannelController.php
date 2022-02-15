@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ChannelController extends Controller
 {
-    public function channels()
+    public function getChannels()
     {
         return Channel::select('id', 'name')->get();
     }

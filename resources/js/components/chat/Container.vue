@@ -13,6 +13,17 @@
     justify-content: flex-start;
     overflow-y: scroll;
 }
+
+.messages-others {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.messages-self {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
 </style>
 
 <template>
@@ -22,7 +33,7 @@
                 <select name="" id="">
                     <option
                         v-for="channel in channels"
-                        :value="channel.name"
+                        :value="channel.id"
                         :key="channel.id"
                     >
                         {{ channel.name }}
@@ -31,11 +42,37 @@
             </div>
             <div class="message-box">
                 <div
-                    class="his-mes"
-                    v-for="item in historyMessages"
-                    :key="item.id"
+                    class="message-for"
+                    v-for="message in historyMessages"
+                    :key="message.id"
                 >
-                    {{ item.user.name }} : {{ item.message }}
+                    <div
+                        class="messages-self"
+                        v-if="message.user.id === userId"
+                    >
+                        <div class="message-name">
+                            {{ message.user.name }}
+                        </div>
+                        <div class="message-message">
+                            {{ message.message }}
+                        </div>
+                        <div class="message-timestamp">
+                            {{ message.created_at }}
+                        </div>
+                        <br />
+                    </div>
+                    <div class="messages-others" v-else>
+                        <div class="message-name">
+                            {{ message.user.name }}
+                        </div>
+                        <div class="message-message">
+                            {{ message.message }}
+                        </div>
+                        <div class="message-timestamp">
+                            {{ message.created_at }}
+                        </div>
+                        <br />
+                    </div>
                 </div>
             </div>
             <input type="text" @keyup.enter="submit" v-model="message" />
@@ -52,6 +89,7 @@ export default {
             channel: 1,
             message: "",
             historyMessages: [],
+            userId: 0,
         };
     },
     methods: {
@@ -69,7 +107,7 @@ export default {
                 message: newMessage,
                 channel: this.channel,
             };
-            axios.post("/message/sendMessage", data).then((e) => {
+            axios.post("/message/send-message", data).then((e) => {
                 // console.log("axios send 回來的訊息");
                 // console.log(e);
                 // this.historyMessages.push(send);
@@ -78,7 +116,7 @@ export default {
         },
         getMessages() {
             axios
-                .post("/message/getMessages", {
+                .get("/message/get-messages", {
                     // message: newMessage,
                 })
                 .then((e) => {
@@ -89,12 +127,22 @@ export default {
         },
         getChannels() {
             axios
-                .post("/channel/channels", {
+                .get("/channel/get-channels", {
                     //
                 })
                 .then((e) => {
                     // 取得所有頻道
                     this.channels = e.data;
+                });
+        },
+        getUserId() {
+            axios
+                .get("/user/get-id", {
+                    //
+                })
+                .then((e) => {
+                    // 取得所有頻道
+                    this.userId = e.data;
                 });
         },
     },
@@ -104,6 +152,9 @@ export default {
 
         // 取得訊息，還沒有分聊天室，目前是取全部訊息的後 20 筆
         this.getMessages();
+
+        // 取得會員ID
+        this.getUserId();
 
         // 創建 Echo 監聽
         Echo.channel("test-event").listen("BroadcastEvent", (e) => {

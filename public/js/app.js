@@ -1987,13 +1987,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       channels: [],
       channel: 1,
       message: "",
-      historyMessages: []
+      historyMessages: [],
+      userId: 0
     };
   },
   methods: {
@@ -2013,7 +2051,7 @@ __webpack_require__.r(__webpack_exports__);
         message: newMessage,
         channel: this.channel
       };
-      axios.post("/message/sendMessage", data).then(function (e) {// console.log("axios send 回來的訊息");
+      axios.post("/message/send-message", data).then(function (e) {// console.log("axios send 回來的訊息");
         // console.log(e);
         // this.historyMessages.push(send);
         // console.log(this.historyMessages);
@@ -2022,7 +2060,7 @@ __webpack_require__.r(__webpack_exports__);
     getMessages: function getMessages() {
       var _this = this;
 
-      axios.post("/message/getMessages", {// message: newMessage,
+      axios.get("/message/get-messages", {// message: newMessage,
       }).then(function (e) {
         // console.log("axios get 回來的訊息");
         // console.log(e);
@@ -2032,24 +2070,35 @@ __webpack_require__.r(__webpack_exports__);
     getChannels: function getChannels() {
       var _this2 = this;
 
-      axios.post("/channel/channels", {//
+      axios.get("/channel/get-channels", {//
       }).then(function (e) {
         // 取得所有頻道
         _this2.channels = e.data;
       });
+    },
+    getUserId: function getUserId() {
+      var _this3 = this;
+
+      axios.get("/user/get-id", {//
+      }).then(function (e) {
+        // 取得所有頻道
+        _this3.userId = e.data;
+      });
     }
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this4 = this;
 
     // 取得所有頻道
     this.getChannels(); // 取得訊息，還沒有分聊天室，目前是取全部訊息的後 20 筆
 
-    this.getMessages(); // 創建 Echo 監聽
+    this.getMessages(); // 取得會員ID
+
+    this.getUserId(); // 創建 Echo 監聽
 
     Echo.channel("test-event").listen("BroadcastEvent", function (e) {
       // 監聽頻道，改變聊天室的訊息
-      _this3.historyMessages = e.message;
+      _this4.historyMessages = e.message;
     }); // Echo.join(`test-event`)
     //     .here((users) => {
     //         //
@@ -6444,7 +6493,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.container[data-v-62e23f16] {\n    width: 100vh;\n    height: 100%;\n    display: flex;\n    flex-wrap: wrap;\n}\n.message-box[data-v-62e23f16] {\n    width: 100%;\n    height: 400px;\n    display: flex;\n    flex-direction: column-reverse;\n    justify-content: flex-start;\n    overflow-y: scroll;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-62e23f16] {\n    width: 100vh;\n    height: 100%;\n    display: flex;\n    flex-wrap: wrap;\n}\n.message-box[data-v-62e23f16] {\n    width: 100%;\n    height: 400px;\n    display: flex;\n    flex-direction: column-reverse;\n    justify-content: flex-start;\n    overflow-y: scroll;\n}\n.messages-others[data-v-62e23f16] {\n    display: flex;\n    flex-direction: column;\n    align-items: flex-start;\n}\n.messages-self[data-v-62e23f16] {\n    display: flex;\n    flex-direction: column;\n    align-items: flex-end;\n}\n", ""]);
 
 // exports
 
@@ -39937,7 +39986,7 @@ var render = function () {
             _vm._l(_vm.channels, function (channel) {
               return _c(
                 "option",
-                { key: channel.id, domProps: { value: channel.name } },
+                { key: channel.id, domProps: { value: channel.id } },
                 [
                   _vm._v(
                     "\n                    " +
@@ -39955,15 +40004,63 @@ var render = function () {
       _c(
         "div",
         { staticClass: "message-box" },
-        _vm._l(_vm.historyMessages, function (item) {
-          return _c("div", { key: item.id, staticClass: "his-mes" }, [
-            _vm._v(
-              "\n                " +
-                _vm._s(item.user.name) +
-                " : " +
-                _vm._s(item.message) +
-                "\n            "
-            ),
+        _vm._l(_vm.historyMessages, function (message) {
+          return _c("div", { key: message.id, staticClass: "message-for" }, [
+            message.user.id === _vm.userId
+              ? _c("div", { staticClass: "messages-self" }, [
+                  _c("div", { staticClass: "message-name" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(message.user.name) +
+                        "\n                    "
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "message-message" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(message.message) +
+                        "\n                    "
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "message-timestamp" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(message.created_at) +
+                        "\n                    "
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("br"),
+                ])
+              : _c("div", { staticClass: "messages-others" }, [
+                  _c("div", { staticClass: "message-name" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(message.user.name) +
+                        "\n                    "
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "message-message" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(message.message) +
+                        "\n                    "
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "message-timestamp" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(message.created_at) +
+                        "\n                    "
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("br"),
+                ]),
           ])
         }),
         0
