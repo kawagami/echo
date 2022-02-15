@@ -6,9 +6,9 @@ use App\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class EchoController extends Controller
+class MessageController extends Controller
 {
-    public function send(Request $request)
+    public function sendMessage(Request $request)
     {
         $newMessage             = new Message();
         $newMessage->user_id    = Auth::id();
@@ -19,12 +19,12 @@ class EchoController extends Controller
         broadcast(new \App\Events\BroadcastEvent($request->message));
         // return 'send';
 
-        return $this->get();
+        return $this->getMessages();
         return $newMessage;
         // return 'hope broadcast success';
     }
 
-    public function get()
+    public function getMessages()
     {
         return Message::with('user')->latest()->take(20)->get();
     }

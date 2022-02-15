@@ -2,7 +2,7 @@
 
 @section('content')
     <div id="echo">
-        <sender></sender>
+        <container></container>
     </div>
 @endsection
 

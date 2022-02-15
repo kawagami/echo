@@ -29,8 +29,10 @@ Route::get('/', function () {
 //     broadcast(new \App\Events\BroadcastEvent());
 //     return response('OK');
 // });
-Route::post('/send', [\App\Http\Controllers\EchoController::class, 'send']);
-Route::post('/get', [\App\Http\Controllers\EchoController::class, 'get']);
+Route::post('/message/sendMessage', [\App\Http\Controllers\MessageController::class, 'sendMessage']);
+Route::post('/message/getMessages', [\App\Http\Controllers\MessageController::class, 'getMessages']);
+
+Route::post('/channel/channels', [\App\Http\Controllers\ChannelController::class, 'channels']);
 
 Auth::routes();
 

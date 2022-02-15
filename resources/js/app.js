@@ -21,7 +21,7 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-import Sender from './components/Sender';
+import Container from './components/chat/Container';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -32,6 +32,6 @@ import Sender from './components/Sender';
 const app = new Vue({
     el: '#echo',
     components: {
-        Sender,
+        Container,
     }
 });
