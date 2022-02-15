@@ -18,6 +18,7 @@
 <template>
     <div id="chat">
         <div class="container">
+            <div class="message-channel" :channel="channel"></div>
             <div class="message-box">
                 <div
                     class="his-mes"
@@ -37,6 +38,7 @@
 export default {
     data() {
         return {
+            channel: 1,
             message: "",
             historyMessages: [],
         };
@@ -52,20 +54,16 @@ export default {
             this.sendMessage(newMessage);
         },
         sendMessage(newMessage) {
-            let send = {
+            let data = {
                 message: newMessage,
-                user: `會員${newMessage}`,
+                channel: this.channel,
             };
-            axios
-                .post("/send", {
-                    message: newMessage,
-                })
-                .then((e) => {
-                    // console.log("axios send 回來的訊息");
-                    // console.log(e);
-                    // this.historyMessages.push(send);
-                    // console.log(this.historyMessages);
-                });
+            axios.post("/send", data).then((e) => {
+                // console.log("axios send 回來的訊息");
+                // console.log(e);
+                // this.historyMessages.push(send);
+                // console.log(this.historyMessages);
+            });
         },
         getMessages() {
             axios
@@ -88,6 +86,10 @@ export default {
             // console.log(e);
 
             this.historyMessages = e.message;
+
+            // // scroll to bottom 新增的文字高度沒算進去
+            // let messageBox = this.$el.querySelector(".message-box");
+            // messageBox.scrollTop = messageBox.scrollHeight;
 
             // // 有變動的時候取得訊息
             // this.getMessages();

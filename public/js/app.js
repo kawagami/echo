@@ -1976,9 +1976,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      channel: 1,
       message: "",
       historyMessages: []
     };
@@ -1996,13 +1998,11 @@ __webpack_require__.r(__webpack_exports__);
       this.sendMessage(newMessage);
     },
     sendMessage: function sendMessage(newMessage) {
-      var send = {
+      var data = {
         message: newMessage,
-        user: "\u6703\u54E1".concat(newMessage)
+        channel: this.channel
       };
-      axios.post("/send", {
-        message: newMessage
-      }).then(function (e) {// console.log("axios send 回來的訊息");
+      axios.post("/send", data).then(function (e) {// console.log("axios send 回來的訊息");
         // console.log(e);
         // this.historyMessages.push(send);
         // console.log(this.historyMessages);
@@ -2027,7 +2027,10 @@ __webpack_require__.r(__webpack_exports__);
     Echo.channel("test-event").listen("BroadcastEvent", function (e) {
       // console.log("listen 的 e 資料");
       // console.log(e);
-      _this2.historyMessages = e.message; // // 有變動的時候取得訊息
+      _this2.historyMessages = e.message; // // scroll to bottom 新增的文字高度沒算進去
+      // let messageBox = this.$el.querySelector(".message-box");
+      // messageBox.scrollTop = messageBox.scrollHeight;
+      // // 有變動的時候取得訊息
       // this.getMessages();
       // // 顯示最後一筆訊息
       // console.log(this.historyMessages.slice(-1)[0].message);
@@ -39908,6 +39911,11 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "chat" } }, [
     _c("div", { staticClass: "container" }, [
+      _c("div", {
+        staticClass: "message-channel",
+        attrs: { channel: _vm.channel },
+      }),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "message-box" },

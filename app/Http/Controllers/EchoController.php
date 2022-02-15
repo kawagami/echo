@@ -10,9 +10,10 @@ class EchoController extends Controller
 {
     public function send(Request $request)
     {
-        $newMessage = new Message();
-        $newMessage->user_id = Auth::id();
-        $newMessage->message = $request->message;
+        $newMessage             = new Message();
+        $newMessage->user_id    = Auth::id();
+        $newMessage->channel_id = $request->channel;
+        $newMessage->message    = $request->message;
         $newMessage->save();
 
         broadcast(new \App\Events\BroadcastEvent($request->message));
