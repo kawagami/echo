@@ -21,13 +21,13 @@
             <div class="message-box">
                 <div
                     class="his-mes"
-                    v-for="(item, index) in historyMessages"
-                    :key="index"
+                    v-for="item in historyMessages"
+                    :key="item.id"
                 >
                     {{ item.user.name }} : {{ item.message }}
                 </div>
             </div>
-            <input type="text" v-model="message" />
+            <input type="text" @keyup.enter="submit" v-model="message" />
             <button type="button" @click="submit">點我送出</button>
         </div>
     </div>
@@ -84,8 +84,8 @@ export default {
 
         // 創建 Echo 監聽
         Echo.channel("test-event").listen("BroadcastEvent", (e) => {
-            console.log("listen 的 e 資料");
-            console.log(e);
+            // console.log("listen 的 e 資料");
+            // console.log(e);
 
             this.historyMessages = e.message;
 

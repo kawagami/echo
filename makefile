@@ -1,7 +1,7 @@
 IMAGE := laravel
 VERSION := latest
-# obj := nginx mysql redis laravel-echo-server php-worker
-obj := nginx mysql redis laravel-echo-server
+obj := nginx mysql redis laravel-echo-server php-worker
+# obj := nginx mysql redis laravel-echo-server
 
 # .PHONY: all build rebuild shell run
 

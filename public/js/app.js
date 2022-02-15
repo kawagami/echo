@@ -2025,8 +2025,8 @@ __webpack_require__.r(__webpack_exports__);
     this.getMessages(); // 創建 Echo 監聽
 
     Echo.channel("test-event").listen("BroadcastEvent", function (e) {
-      console.log("listen 的 e 資料");
-      console.log(e);
+      // console.log("listen 的 e 資料");
+      // console.log(e);
       _this2.historyMessages = e.message; // // 有變動的時候取得訊息
       // this.getMessages();
       // // 顯示最後一筆訊息
@@ -39911,8 +39911,8 @@ var render = function () {
       _c(
         "div",
         { staticClass: "message-box" },
-        _vm._l(_vm.historyMessages, function (item, index) {
-          return _c("div", { key: index, staticClass: "his-mes" }, [
+        _vm._l(_vm.historyMessages, function (item) {
+          return _c("div", { key: item.id, staticClass: "his-mes" }, [
             _vm._v(
               "\n                " +
                 _vm._s(item.user.name) +
@@ -39937,6 +39937,15 @@ var render = function () {
         attrs: { type: "text" },
         domProps: { value: _vm.message },
         on: {
+          keyup: function ($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            return _vm.submit.apply(null, arguments)
+          },
           input: function ($event) {
             if ($event.target.composing) {
               return
