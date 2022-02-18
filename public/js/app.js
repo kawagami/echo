@@ -2024,6 +2024,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6493,7 +6505,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.container[data-v-62e23f16] {\n    width: 100vh;\n    height: 100%;\n    display: flex;\n    flex-wrap: wrap;\n}\n.message-box[data-v-62e23f16] {\n    width: 100%;\n    height: 400px;\n    display: flex;\n    flex-direction: column-reverse;\n    justify-content: flex-start;\n    overflow-y: scroll;\n}\n.messages-others[data-v-62e23f16] {\n    display: flex;\n    flex-direction: column;\n    align-items: flex-start;\n}\n.messages-self[data-v-62e23f16] {\n    display: flex;\n    flex-direction: column;\n    align-items: flex-end;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-62e23f16] {\n    width: 100vh;\n    height: 100%;\n    display: flex;\n    flex-wrap: wrap;\n}\n.message-box[data-v-62e23f16] {\n    width: 100%;\n    height: 400px;\n    display: flex;\n    flex-direction: column-reverse;\n    justify-content: flex-start;\n    overflow-y: scroll;\n}\n.messages-others[data-v-62e23f16] {\n    display: flex;\n    flex-direction: column;\n    align-items: flex-start;\n}\n.messages-self[data-v-62e23f16] {\n    display: flex;\n    flex-direction: column;\n    align-items: flex-end;\n}\n.message-input[data-v-62e23f16] {\n    width: 100%;\n}\n", ""]);
 
 // exports
 
@@ -39974,133 +39986,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "chat" } }, [
-    _c("div", { staticClass: "container" }, [
-      _c(
-        "div",
-        { staticClass: "message-channel", attrs: { channel: _vm.channel } },
-        [
-          _c(
-            "select",
-            { attrs: { name: "", id: "" } },
-            _vm._l(_vm.channels, function (channel) {
-              return _c(
-                "option",
-                { key: channel.id, domProps: { value: channel.id } },
-                [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(channel.name) +
-                      "\n                "
-                  ),
-                ]
-              )
-            }),
-            0
-          ),
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "message-box" },
-        _vm._l(_vm.historyMessages, function (message) {
-          return _c("div", { key: message.id, staticClass: "message-for" }, [
-            message.user.id === _vm.userId
-              ? _c("div", { staticClass: "messages-self" }, [
-                  _c("div", { staticClass: "message-name" }, [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(message.user.name) +
-                        "\n                    "
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "message-message" }, [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(message.message) +
-                        "\n                    "
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "message-timestamp" }, [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(message.created_at) +
-                        "\n                    "
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("br"),
-                ])
-              : _c("div", { staticClass: "messages-others" }, [
-                  _c("div", { staticClass: "message-name" }, [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(message.user.name) +
-                        "\n                    "
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "message-message" }, [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(message.message) +
-                        "\n                    "
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "message-timestamp" }, [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(message.created_at) +
-                        "\n                    "
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("br"),
-                ]),
-          ])
-        }),
-        0
-      ),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.message,
-            expression: "message",
-          },
-        ],
-        attrs: { type: "text" },
-        domProps: { value: _vm.message },
-        on: {
-          keyup: function ($event) {
-            if (
-              !$event.type.indexOf("key") &&
-              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-            ) {
-              return null
-            }
-            return _vm.submit.apply(null, arguments)
-          },
-          input: function ($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.message = $event.target.value
-          },
-        },
-      }),
-      _vm._v(" "),
-      _c("button", { attrs: { type: "button" }, on: { click: _vm.submit } }, [
-        _vm._v("點我送出"),
-      ]),
-    ]),
-  ])
+  return _c("div", { staticClass: "ttt" })
 }
 var staticRenderFns = []
 render._withStripped = true

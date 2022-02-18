@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     // broadcast(new \App\Events\BroadcastEvent());
-    return view('welcome');
+    // return view('welcome');
+    return view('chat');
 });
 
 // Route::get('/', function () {

@@ -24,10 +24,13 @@
     flex-direction: column;
     align-items: flex-end;
 }
+.message-input {
+    width: 100%;
+}
 </style>
 
 <template>
-    <div id="chat">
+    <!-- <div id="chat">
         <div class="container">
             <div class="message-channel" :channel="channel">
                 <select name="" id="">
@@ -75,10 +78,19 @@
                     </div>
                 </div>
             </div>
-            <input type="text" @keyup.enter="submit" v-model="message" />
-            <button type="button" @click="submit">點我送出</button>
+            <div class="message-input input-group mb-3">
+                <input
+                    class="form-control"
+                    type="text"
+                    @keyup.enter="submit"
+                    v-model="message"
+                />
+                <button type="button" @click="submit">點我送出</button>
+            </div>
         </div>
-    </div>
+    </div> -->
+<div class="ttt"></div>
+
 </template>
 
 <script>
@@ -116,7 +128,7 @@ export default {
         },
         getMessages() {
             axios
-                .get("/message/get-messages", {
+                .get(`/message/get-messages`, {
                     // message: newMessage,
                 })
                 .then((e) => {

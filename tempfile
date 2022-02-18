@@ -1,0 +1,19 @@
+
+make c
+
+php artisan queue:work --tries=3 --sleep=3
+
+node.js 17 版的問題
+export NODE_OPTIONS=--openssl-legacy-provider
+npm run watch
+
+可以執行下列指令查看 php-worker
+docker exec -it laradock_php-worker_1 top
+
+可以執行下列指令查看 laravel-echo-server
+docker exec -it laradock_laravel-echo-server_1 top
+
+如果沒有正常執行等待中的任務，可以嘗試執行
+docker exec -it laradock_php-worker_1 supervisorctl reread
+docker exec -it laradock_php-worker_1 supervisorctl update
+docker exec -it laradock_php-worker_1 supervisorctl laravel-worker:*
