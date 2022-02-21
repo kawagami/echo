@@ -2036,6 +2036,222 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2096,6 +2312,31 @@ __webpack_require__.r(__webpack_exports__);
         // 取得所有頻道
         _this3.userId = e.data;
       });
+    },
+    getChannelStatus: function getChannelStatus() {
+      axios.get("/apps/test-event/status", {//
+      }).then(function (e) {
+        // 取得 laravel echo server status
+        console.log(e);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    dateFormat: function dateFormat(date) {
+      // // 原始 js 處理日期做法
+      // const dateTimeString = new Date(date);
+      // const year = dateTimeString.getFullYear(); //2016
+      // const month = dateTimeString.getMonth() + 1; //6
+      // const d = dateTimeString.getDate(); //15
+      // const hour = dateTimeString.getHours(); //0-24
+      // const minute = dateTimeString.getMinutes(); //0-59
+      // const second = dateTimeString.getSeconds(); //0-59
+      // const result = `${year}-${month}-${d} ${hour}:${minute}:${second}`;
+      // //
+      // return result;
+      // moment.js 的作法
+      //
+      return moment(date).format('YYYY-MM-DD HH:mm:ss'); //
     }
   },
   mounted: function mounted() {
@@ -2110,6 +2351,7 @@ __webpack_require__.r(__webpack_exports__);
 
     Echo.channel("test-event").listen("BroadcastEvent", function (e) {
       // 監聽頻道，改變聊天室的訊息
+      console.log(e);
       _this4.historyMessages = e.message;
     }); // Echo.join(`test-event`)
     //     .here((users) => {
@@ -6505,7 +6747,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.container[data-v-62e23f16] {\n    width: 100vh;\n    height: 100%;\n    display: flex;\n    flex-wrap: wrap;\n}\n.message-box[data-v-62e23f16] {\n    width: 100%;\n    height: 400px;\n    display: flex;\n    flex-direction: column-reverse;\n    justify-content: flex-start;\n    overflow-y: scroll;\n}\n.messages-others[data-v-62e23f16] {\n    display: flex;\n    flex-direction: column;\n    align-items: flex-start;\n}\n.messages-self[data-v-62e23f16] {\n    display: flex;\n    flex-direction: column;\n    align-items: flex-end;\n}\n.message-input[data-v-62e23f16] {\n    width: 100%;\n}\n", ""]);
+exports.push([module.i, "\n/* .container {\n    width: 100vh;\n    height: 100%;\n    display: flex;\n    flex-wrap: wrap;\n} */\n.modal-body[data-v-62e23f16] {\n    width: 100%;\n    height: 400px;\n    display: flex;\n    flex-direction: column-reverse;\n    justify-content: flex-start;\n    overflow-y: scroll;\n}\n\n/* .messages-others {\n    display: flex;\n    flex-direction: column;\n    align-items: flex-start;\n}\n.messages-self {\n    display: flex;\n    flex-direction: column;\n    align-items: flex-end;\n}\n.message-input {\n    width: 100%;\n} */\n", ""]);
 
 // exports
 
@@ -39986,9 +40228,394 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "ttt" })
+  return _c("div", { attrs: { id: "echo" } }, [
+    _c("button", { on: { click: _vm.getChannelStatus } }, [
+      _vm._v("取得頻道狀態"),
+    ]),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "container" }, [
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "staticBackdrop-talk",
+            "data-bs-backdrop": "static",
+            "data-bs-keyboard": "false",
+            tabindex: "-1",
+            "aria-labelledby": "staticBackdropLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c("div", { staticClass: "modal-dialog forchat" }, [
+            _c("div", { staticClass: "modal-content fortalk" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "select",
+                  {
+                    staticClass: "form-select",
+                    attrs: { "aria-label": "Default select example" },
+                  },
+                  _vm._l(_vm.channels, function (channel) {
+                    return _c(
+                      "option",
+                      { key: channel.id, domProps: { value: channel.id } },
+                      [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(channel.name) +
+                            "\n                            "
+                        ),
+                      ]
+                    )
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _vm._m(2),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-body" },
+                [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _vm._l(_vm.historyMessages, function (message) {
+                    return _c(
+                      "div",
+                      { key: message.id, staticClass: "message-for" },
+                      [
+                        message.user.id === _vm.userId
+                          ? _c(
+                              "div",
+                              { staticClass: "chat-inner italk w-last" },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "talk-box w-space-evenly" },
+                                  [
+                                    _c("div", { staticClass: "chat-box" }, [
+                                      _c("p", [
+                                        _vm._v(
+                                          "\n                                            " +
+                                            _vm._s(message.user.name) +
+                                            "\n                                        "
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("p", [
+                                        _vm._v(
+                                          "\n                                            " +
+                                            _vm._s(message.message) +
+                                            "\n                                        "
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("p", [
+                                        _vm._v(
+                                          "\n                                            " +
+                                            _vm._s(
+                                              _vm.dateFormat(message.created_at)
+                                            ) +
+                                            "\n                                        "
+                                        ),
+                                      ]),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("img", {
+                                      staticClass: "chat-bigimg",
+                                      attrs: {
+                                        src: __webpack_require__(/*! ../../images/profile/profile_photo_10.png */ "./resources/js/images/profile/profile_photo_10.png"),
+                                      },
+                                    }),
+                                  ]
+                                ),
+                              ]
+                            )
+                          : _c("div", { staticClass: "chat-inner" }, [
+                              _c(
+                                "div",
+                                { staticClass: "talk-box w-space-evenly" },
+                                [
+                                  _c("img", {
+                                    staticClass: "chat-bigimg",
+                                    attrs: {
+                                      src: __webpack_require__(/*! ../../images/profile/profile_photo_10.png */ "./resources/js/images/profile/profile_photo_10.png"),
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "chat-box" }, [
+                                    _c("p", [
+                                      _vm._v(
+                                        "\n                                            " +
+                                          _vm._s(message.user.name) +
+                                          "\n                                        "
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _vm._v(
+                                        "\n                                            " +
+                                          _vm._s(message.message) +
+                                          "\n                                        "
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _vm._v(
+                                        "\n                                            " +
+                                          _vm._s(
+                                            _vm.dateFormat(message.created_at)
+                                          ) +
+                                          "\n                                        "
+                                      ),
+                                    ]),
+                                  ]),
+                                ]
+                              ),
+                            ]),
+                      ]
+                    )
+                  }),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "talkbox-down w-h-space-evenly" }, [
+                _vm._m(4),
+                _vm._v(" "),
+                _vm._m(5),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.message,
+                      expression: "message",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "exampleInput",
+                    placeholder: "請輸聊天內容",
+                  },
+                  domProps: { value: _vm.message },
+                  on: {
+                    keyup: function ($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.submit.apply(null, arguments)
+                    },
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.message = $event.target.value
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  attrs: {
+                    src: __webpack_require__(/*! ../../images/chat/chat_icon_send.png */ "./resources/js/images/chat/chat_icon_send.png"),
+                  },
+                  on: { click: _vm.submit },
+                }),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _vm._m(6),
+        ]
+      ),
+    ]),
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "menu-1icon-talk w-h-start" }, [
+      _c("div", { staticClass: "icon3box" }, [
+        _c(
+          "a",
+          {
+            attrs: {
+              href: "",
+              "data-bs-toggle": "modal",
+              "data-bs-target": "#staticBackdrop-talk",
+            },
+          },
+          [
+            _c("img", {
+              staticClass: "icon-hint",
+              attrs: { src: __webpack_require__(/*! ../../images/lobby/lobby_icon_hint.png */ "./resources/js/images/lobby/lobby_icon_hint.png") },
+            }),
+            _vm._v(" "),
+            _c("img", {
+              staticClass: "icon-img",
+              attrs: { src: __webpack_require__(/*! ../../images/lobby/lobby_icon_talk.png */ "./resources/js/images/lobby/lobby_icon_talk.png") },
+            }),
+          ]
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "m-people w-h-start" }, [
+      _c("img", {
+        attrs: { src: __webpack_require__(/*! ../../images/chat/chat_icon_people.svg */ "./resources/js/images/chat/chat_icon_people.svg") },
+      }),
+      _vm._v("\n                            99+\n                        "),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        attrs: {
+          type: "button",
+          "data-bs-dismiss": "modal",
+          "aria-label": "Close",
+        },
+      },
+      [
+        _c("img", {
+          attrs: { src: __webpack_require__(/*! ../../images/common_icon_close.png */ "./resources/js/images/common_icon_close.png") },
+        }),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "phiz_content", attrs: { id: "light" } }, [
+      _c("div", { staticClass: "row" }, [
+        _c("img", {
+          staticClass: "col-3",
+          attrs: { src: __webpack_require__(/*! ../../images/chat/chat_sticker_01.png */ "./resources/js/images/chat/chat_sticker_01.png") },
+        }),
+        _vm._v(" "),
+        _c("img", {
+          staticClass: "col-3",
+          attrs: { src: __webpack_require__(/*! ../../images/chat/chat_sticker_02.png */ "./resources/js/images/chat/chat_sticker_02.png") },
+        }),
+        _vm._v(" "),
+        _c("img", {
+          staticClass: "col-3",
+          attrs: { src: __webpack_require__(/*! ../../images/chat/chat_sticker_03.png */ "./resources/js/images/chat/chat_sticker_03.png") },
+        }),
+        _vm._v(" "),
+        _c("img", {
+          staticClass: "col-3",
+          attrs: { src: __webpack_require__(/*! ../../images/chat/chat_sticker_04.png */ "./resources/js/images/chat/chat_sticker_04.png") },
+        }),
+        _vm._v(" "),
+        _c("img", {
+          staticClass: "col-3",
+          attrs: { src: __webpack_require__(/*! ../../images/chat/chat_sticker_05.png */ "./resources/js/images/chat/chat_sticker_05.png") },
+        }),
+        _vm._v(" "),
+        _c("img", {
+          staticClass: "col-3",
+          attrs: { src: __webpack_require__(/*! ../../images/chat/chat_sticker_06.png */ "./resources/js/images/chat/chat_sticker_06.png") },
+        }),
+        _vm._v(" "),
+        _c("img", {
+          staticClass: "col-3",
+          attrs: { src: __webpack_require__(/*! ../../images/chat/chat_sticker_07.png */ "./resources/js/images/chat/chat_sticker_07.png") },
+        }),
+        _vm._v(" "),
+        _c("img", {
+          staticClass: "col-3",
+          attrs: { src: __webpack_require__(/*! ../../images/chat/chat_sticker_08.png */ "./resources/js/images/chat/chat_sticker_08.png") },
+        }),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "smile_btn",
+        attrs: {
+          href: "javascript:void(0)",
+          onclick:
+            "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'",
+          id: "fade",
+        },
+      },
+      [
+        _c("img", {
+          attrs: { src: __webpack_require__(/*! ../../images/chat/chat_icon_sticker_a.png */ "./resources/js/images/chat/chat_icon_sticker_a.png") },
+        }),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        attrs: {
+          href: "javascript:void(0)",
+          onclick:
+            "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'",
+        },
+      },
+      [
+        _c("img", {
+          attrs: { src: __webpack_require__(/*! ../../images/chat/chat_icon_sticker.png */ "./resources/js/images/chat/chat_icon_sticker.png") },
+        }),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "menu-1icon-talk w-h-start layerup" }, [
+      _c("div", { staticClass: "icon3box" }, [
+        _c("a", [
+          _c("img", {
+            staticClass: "icon-hint",
+            attrs: { src: __webpack_require__(/*! ../../images/lobby/lobby_icon_hint.png */ "./resources/js/images/lobby/lobby_icon_hint.png") },
+          }),
+          _vm._v(" "),
+          _c("img", {
+            staticClass: "icon-img",
+            attrs: { src: __webpack_require__(/*! ../../images/lobby/lobby_icon_talk.png */ "./resources/js/images/lobby/lobby_icon_talk.png") },
+          }),
+        ]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -52459,6 +53086,182 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Container_vue_vue_type_template_id_62e23f16_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/images/chat/chat_icon_people.svg":
+/*!*******************************************************!*\
+  !*** ./resources/js/images/chat/chat_icon_people.svg ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/chat_icon_people.svg?ed8e494b5e52f6890b1e0b7d81d3db0c";
+
+/***/ }),
+
+/***/ "./resources/js/images/chat/chat_icon_send.png":
+/*!*****************************************************!*\
+  !*** ./resources/js/images/chat/chat_icon_send.png ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/chat_icon_send.png?94df4e44637edb5cbe78eafa030d7aa1";
+
+/***/ }),
+
+/***/ "./resources/js/images/chat/chat_icon_sticker.png":
+/*!********************************************************!*\
+  !*** ./resources/js/images/chat/chat_icon_sticker.png ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/chat_icon_sticker.png?b002277849675e6508f2f5b33783a40b";
+
+/***/ }),
+
+/***/ "./resources/js/images/chat/chat_icon_sticker_a.png":
+/*!**********************************************************!*\
+  !*** ./resources/js/images/chat/chat_icon_sticker_a.png ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/chat_icon_sticker_a.png?2e09951f1bfbeeefac8c509048eebf3d";
+
+/***/ }),
+
+/***/ "./resources/js/images/chat/chat_sticker_01.png":
+/*!******************************************************!*\
+  !*** ./resources/js/images/chat/chat_sticker_01.png ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/chat_sticker_01.png?508270b65ffc0b0193f2be17e7942796";
+
+/***/ }),
+
+/***/ "./resources/js/images/chat/chat_sticker_02.png":
+/*!******************************************************!*\
+  !*** ./resources/js/images/chat/chat_sticker_02.png ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/chat_sticker_02.png?014e30b174f5e758989713063cbd8944";
+
+/***/ }),
+
+/***/ "./resources/js/images/chat/chat_sticker_03.png":
+/*!******************************************************!*\
+  !*** ./resources/js/images/chat/chat_sticker_03.png ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/chat_sticker_03.png?8cb9c03624b8d54afce17957206cf783";
+
+/***/ }),
+
+/***/ "./resources/js/images/chat/chat_sticker_04.png":
+/*!******************************************************!*\
+  !*** ./resources/js/images/chat/chat_sticker_04.png ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/chat_sticker_04.png?2cb73b870076220591c858e924105bdd";
+
+/***/ }),
+
+/***/ "./resources/js/images/chat/chat_sticker_05.png":
+/*!******************************************************!*\
+  !*** ./resources/js/images/chat/chat_sticker_05.png ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/chat_sticker_05.png?40def5de6f2da96f86f371a998388104";
+
+/***/ }),
+
+/***/ "./resources/js/images/chat/chat_sticker_06.png":
+/*!******************************************************!*\
+  !*** ./resources/js/images/chat/chat_sticker_06.png ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/chat_sticker_06.png?9103c4734b99a751399b4f1fe4f7c65f";
+
+/***/ }),
+
+/***/ "./resources/js/images/chat/chat_sticker_07.png":
+/*!******************************************************!*\
+  !*** ./resources/js/images/chat/chat_sticker_07.png ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/chat_sticker_07.png?d21146a3a452681f9fcae07d3222df62";
+
+/***/ }),
+
+/***/ "./resources/js/images/chat/chat_sticker_08.png":
+/*!******************************************************!*\
+  !*** ./resources/js/images/chat/chat_sticker_08.png ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/chat_sticker_08.png?d400965358df60ca094dd86dba2c1444";
+
+/***/ }),
+
+/***/ "./resources/js/images/common_icon_close.png":
+/*!***************************************************!*\
+  !*** ./resources/js/images/common_icon_close.png ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/common_icon_close.png?314b0aed8cc8d1cdb8809981fd5ad7b6";
+
+/***/ }),
+
+/***/ "./resources/js/images/lobby/lobby_icon_hint.png":
+/*!*******************************************************!*\
+  !*** ./resources/js/images/lobby/lobby_icon_hint.png ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/lobby_icon_hint.png?2149d5122ec81b9756068d74b3fd90eb";
+
+/***/ }),
+
+/***/ "./resources/js/images/lobby/lobby_icon_talk.png":
+/*!*******************************************************!*\
+  !*** ./resources/js/images/lobby/lobby_icon_talk.png ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/lobby_icon_talk.png?ff08688b0a597407477942d74a362eca";
+
+/***/ }),
+
+/***/ "./resources/js/images/profile/profile_photo_10.png":
+/*!**********************************************************!*\
+  !*** ./resources/js/images/profile/profile_photo_10.png ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/profile_photo_10.png?122bee0afea673a2bc394bf401aed9d0";
 
 /***/ }),
 

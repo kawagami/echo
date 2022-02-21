@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Message;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +27,9 @@ class MessageController extends Controller
     public function getMessages()
     {
         abort_unless(Auth::check(), 401);
-
-        return Message::with('user')->latest()->take(20)->get();
+        //
+        $messages = Message::with('user')->latest()->take(20)->get();
+        //
+        return $messages;
     }
 }

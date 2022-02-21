@@ -1,11 +1,11 @@
 <style scoped>
-.container {
+/* .container {
     width: 100vh;
     height: 100%;
     display: flex;
     flex-wrap: wrap;
-}
-.message-box {
+} */
+.modal-body {
     width: 100%;
     height: 400px;
     display: flex;
@@ -14,7 +14,7 @@
     overflow-y: scroll;
 }
 
-.messages-others {
+/* .messages-others {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -26,7 +26,7 @@
 }
 .message-input {
     width: 100%;
-}
+} */
 </style>
 
 <template>
@@ -89,8 +89,224 @@
             </div>
         </div>
     </div> -->
-<div class="ttt"></div>
-
+    <div id="echo">
+        <!-- 測試用按鈕 -->
+        <button @click="getChannelStatus">取得頻道狀態</button>
+        <!--  -->
+        <div class="menu-1icon-talk w-h-start">
+            <div class="icon3box">
+                <a
+                    href=""
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop-talk"
+                >
+                    <img
+                        src="../../images/lobby/lobby_icon_hint.png"
+                        class="icon-hint"
+                    />
+                    <img
+                        src="../../images/lobby/lobby_icon_talk.png"
+                        class="icon-img"
+                    />
+                </a>
+            </div>
+        </div>
+        <div class="container">
+            <div
+                class="modal fade"
+                id="staticBackdrop-talk"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                tabindex="-1"
+                aria-labelledby="staticBackdropLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog forchat">
+                    <div class="modal-content fortalk">
+                        <div class="modal-header">
+                            <!-- 頻道選擇 -->
+                            <select
+                                class="form-select"
+                                aria-label="Default select example"
+                            >
+                                <option
+                                    v-for="channel in channels"
+                                    :value="channel.id"
+                                    :key="channel.id"
+                                >
+                                    {{ channel.name }}
+                                </option>
+                            </select>
+                            <!-- 人數顯示 -->
+                            <div class="m-people w-h-start">
+                                <img
+                                    src="../../images/chat/chat_icon_people.svg"
+                                />
+                                99+
+                            </div>
+                            <!-- modal 關閉按鈕 -->
+                            <button
+                                type="button"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            >
+                                <img src="../../images/common_icon_close.png" />
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- 聊天室表情 -->
+                            <div id="light" class="phiz_content">
+                                <div class="row">
+                                    <img
+                                        src="../../images/chat/chat_sticker_01.png"
+                                        class="col-3"
+                                    />
+                                    <img
+                                        src="../../images/chat/chat_sticker_02.png"
+                                        class="col-3"
+                                    />
+                                    <img
+                                        src="../../images/chat/chat_sticker_03.png"
+                                        class="col-3"
+                                    />
+                                    <img
+                                        src="../../images/chat/chat_sticker_04.png"
+                                        class="col-3"
+                                    />
+                                    <img
+                                        src="../../images/chat/chat_sticker_05.png"
+                                        class="col-3"
+                                    />
+                                    <img
+                                        src="../../images/chat/chat_sticker_06.png"
+                                        class="col-3"
+                                    />
+                                    <img
+                                        src="../../images/chat/chat_sticker_07.png"
+                                        class="col-3"
+                                    />
+                                    <img
+                                        src="../../images/chat/chat_sticker_08.png"
+                                        class="col-3"
+                                    />
+                                </div>
+                            </div>
+                            <!--  -->
+                            <div
+                                class="message-for"
+                                v-for="message in historyMessages"
+                                :key="message.id"
+                            >
+                                <!-- 自己訊息 -->
+                                <div
+                                    class="chat-inner italk w-last"
+                                    v-if="message.user.id === userId"
+                                >
+                                    <div class="talk-box w-space-evenly">
+                                        <div class="chat-box">
+                                            <p>
+                                                {{ message.user.name }}
+                                            </p>
+                                            <p>
+                                                {{ message.message }}
+                                            </p>
+                                            <p>
+                                                {{
+                                                    dateFormat(
+                                                        message.created_at
+                                                    )
+                                                }}
+                                            </p>
+                                        </div>
+                                        <img
+                                            src="../../images/profile/profile_photo_10.png"
+                                            class="chat-bigimg"
+                                        />
+                                    </div>
+                                </div>
+                                <!-- 他人訊息 -->
+                                <div class="chat-inner" v-else>
+                                    <div class="talk-box w-space-evenly">
+                                        <img
+                                            src="../../images/profile/profile_photo_10.png"
+                                            class="chat-bigimg"
+                                        />
+                                        <div class="chat-box">
+                                            <p>
+                                                {{ message.user.name }}
+                                            </p>
+                                            <p>
+                                                {{ message.message }}
+                                            </p>
+                                            <p>
+                                                {{
+                                                    dateFormat(
+                                                        message.created_at
+                                                    )
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  -->
+                        </div>
+                        <!-- input 那一列 -->
+                        <div class="talkbox-down w-h-space-evenly">
+                            <!-- 選擇貼圖的按鈕 -->
+                            <a
+                                href="javascript:void(0)"
+                                onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'"
+                                id="fade"
+                                class="smile_btn"
+                            >
+                                <img
+                                    src="../../images/chat/chat_icon_sticker_a.png"
+                                />
+                            </a>
+                            <a
+                                href="javascript:void(0)"
+                                onclick="document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'"
+                            >
+                                <img
+                                    src="../../images/chat/chat_icon_sticker.png"
+                                />
+                            </a>
+                            <!-- 訊息輸入列 -->
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="exampleInput"
+                                placeholder="請輸聊天內容"
+                                @keyup.enter="submit"
+                                v-model="message"
+                            />
+                            <!-- 訊息送出圖示 -->
+                            <img
+                                src="../../images/chat/chat_icon_send.png"
+                                @click="submit"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <!-- menu icon talk-->
+                <div class="menu-1icon-talk w-h-start layerup">
+                    <div class="icon3box">
+                        <a>
+                            <img
+                                src="../../images/lobby/lobby_icon_hint.png"
+                                class="icon-hint"
+                            />
+                            <img
+                                src="../../images/lobby/lobby_icon_talk.png"
+                                class="icon-img"
+                            />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -157,6 +373,36 @@ export default {
                     this.userId = e.data;
                 });
         },
+        getChannelStatus() {
+            axios
+                .get("/apps/test-event/status", {
+                    //
+                })
+                .then((e) => {
+                    // 取得 laravel echo server status
+                    console.log(e);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        dateFormat(date) {
+            // // 原始 js 處理日期做法
+            // const dateTimeString = new Date(date);
+            // const year = dateTimeString.getFullYear(); //2016
+            // const month = dateTimeString.getMonth() + 1; //6
+            // const d = dateTimeString.getDate(); //15
+            // const hour = dateTimeString.getHours(); //0-24
+            // const minute = dateTimeString.getMinutes(); //0-59
+            // const second = dateTimeString.getSeconds(); //0-59
+            // const result = `${year}-${month}-${d} ${hour}:${minute}:${second}`;
+            // //
+            // return result;
+            // moment.js 的作法
+            //
+            return moment(date).format('YYYY-MM-DD HH:mm:ss');
+            //
+        },
     },
     mounted() {
         // 取得所有頻道
@@ -171,6 +417,7 @@ export default {
         // 創建 Echo 監聽
         Echo.channel("test-event").listen("BroadcastEvent", (e) => {
             // 監聽頻道，改變聊天室的訊息
+            console.log(e);
             this.historyMessages = e.message;
         });
         // Echo.join(`test-event`)
