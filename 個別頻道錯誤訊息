@@ -1,0 +1,17 @@
+多個個別頻道錯誤訊息
+laravel-echo-server_1  | 2022-02-22T08:30:45.713305600Z [2022-02-22T08:30:45.712Z] - Preparing authentication request to: localhost
+laravel-echo-server_1  | 2022-02-22T08:30:45.713372900Z [2022-02-22T08:30:45.713Z] - Sending auth request to: localhost/broadcasting/auth
+laravel-echo-server_1  | 2022-02-22T08:30:45.713380100Z
+laravel-echo-server_1  | 2022-02-22T08:30:45.714745200Z [2022-02-22T08:30:45.714Z] - Error authenticating t1T6qrhZidZVHAt7AAAC for private-chat.1
+laravel-echo-server_1  | 2022-02-22T08:30:45.715347600Z Error: Invalid URI "localhost/broadcasting/auth"
+laravel-echo-server_1  | 2022-02-22T08:30:45.715378200Z     at Request.init (/usr/src/app/node_modules/request/request.js:273:31)
+laravel-echo-server_1  | 2022-02-22T08:30:45.715383200Z     at new Request (/usr/src/app/node_modules/request/request.js:127:8)
+laravel-echo-server_1  | 2022-02-22T08:30:45.715386000Z     at request (/usr/src/app/node_modules/request/index.js:53:10)
+laravel-echo-server_1  | 2022-02-22T08:30:45.715389000Z     at Function.post (/usr/src/app/node_modules/request/index.js:61:12)
+laravel-echo-server_1  | 2022-02-22T08:30:45.715391600Z     at /usr/src/app/node_modules/laravel-echo-server/dist/channels/private-channel.js:58:27
+laravel-echo-server_1  | 2022-02-22T08:30:45.715394800Z     at new Promise (<anonymous>)
+laravel-echo-server_1  | 2022-02-22T08:30:45.715397900Z     at PrivateChannel.serverRequest (/usr/src/app/node_modules/laravel-echo-server/dist/channels/private-channel.js:55:16)
+laravel-echo-server_1  | 2022-02-22T08:30:45.715400600Z     at PrivateChannel.authenticate (/usr/src/app/node_modules/laravel-echo-server/dist/channels/private-channel.js:22:21)
+laravel-echo-server_1  | 2022-02-22T08:30:45.715404400Z     at Channel.joinPrivate (/usr/src/app/node_modules/laravel-echo-server/dist/channels/channel.js:69:22)
+laravel-echo-server_1  | 2022-02-22T08:30:45.715407300Z     at Channel.join (/usr/src/app/node_modules/laravel-echo-server/dist/channels/channel.js:22:22)
+laravel-echo-server_1  | 2022-02-22T08:30:45.715432500Z Error sending authentication request.

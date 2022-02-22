@@ -4,8 +4,7 @@ make c
 php artisan queue:work --tries=3 --sleep=3
 
 node.js 17 版的問題
-export NODE_OPTIONS=--openssl-legacy-provider
-npm run watch
+export NODE_OPTIONS=--openssl-legacy-provider && npm run watch
 
 可以執行下列指令查看 php-worker
 docker exec -it laradock_php-worker_1 top

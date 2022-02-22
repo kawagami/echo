@@ -2252,14 +2252,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      nowChannelName: "",
       channels: [],
       channel: 1,
       message: "",
       historyMessages: [],
-      userId: 0
+      userId: 0,
+      userNumber: 0,
+      timeToGetChannelStatus: 0
     };
   },
   methods: {
@@ -2314,10 +2319,18 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getChannelStatus: function getChannelStatus() {
-      axios.get("/apps/test-event/status", {//
+      var _this4 = this;
+
+      // console.log(moment().format("YYYY/MM/DD HH:mm"));
+      // 取得特定頻道的資訊 test-event 可替換成其他頻道名稱
+      // "http://dd.dd:6001/apps/4e8ab2c4f7f32951/channels/test-event?auth_key=0e08c64a779309b7afcc17a2d8b9268d"
+      axios.get("http://dd.dd:6001/apps/4e8ab2c4f7f32951/status?auth_key=0e08c64a779309b7afcc17a2d8b9268d", {//
       }).then(function (e) {
         // 取得 laravel echo server status
-        console.log(e);
+        console.log(e); // 現在聊天室人數 100 以上就顯示 99+
+
+        var nowUsersNumber = e.data.subscription_count > 99 ? "99+" : e.data.subscription_count;
+        _this4.userNumber = nowUsersNumber;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2336,23 +2349,38 @@ __webpack_require__.r(__webpack_exports__);
       // return result;
       // moment.js 的作法
       //
-      return moment(date).format('YYYY-MM-DD HH:mm:ss'); //
+      return moment(date).format("YYYY/MM/DD HH:mm"); //
+    },
+    clickOthersIcon: function clickOthersIcon(e) {
+      // 點擊他人頭像後 input 欄位變成 @ 該頭像使用者
+      console.log(e.target.dataset.username); // console.log(e.target.nextElementSibling); // 抓同一層的下一個元素
+
+      var targetName = e.target.dataset.username;
+      this.message = "@".concat(targetName, " "); //
+      // return moment(date).format("YYYY/MM/DD HH:mm");
+      //
     }
   },
   mounted: function mounted() {
-    var _this4 = this;
+    var _this5 = this;
 
     // 取得所有頻道
     this.getChannels(); // 取得訊息，還沒有分聊天室，目前是取全部訊息的後 20 筆
 
     this.getMessages(); // 取得會員ID
 
-    this.getUserId(); // 創建 Echo 監聽
+    this.getUserId(); // 取得頻道資訊
+
+    this.getChannelStatus(); // 定時取得頻道資訊 : 目前 10 秒取得一次
+
+    this.timeToGetChannelStatus = setInterval(function () {
+      _this5.getChannelStatus();
+    }, 30 * 1000); // 創建 Echo 監聽
 
     Echo.channel("test-event").listen("BroadcastEvent", function (e) {
       // 監聽頻道，改變聊天室的訊息
       console.log(e);
-      _this4.historyMessages = e.message;
+      _this5.historyMessages = e.message;
     }); // Echo.join(`test-event`)
     //     .here((users) => {
     //         //
@@ -40275,16 +40303,27 @@ var render = function () {
                   0
                 ),
                 _vm._v(" "),
-                _vm._m(1),
+                _c("div", { staticClass: "m-people w-h-start" }, [
+                  _c("img", {
+                    attrs: {
+                      src: __webpack_require__(/*! ../../images/chat/chat_icon_people.svg */ "./resources/js/images/chat/chat_icon_people.svg"),
+                    },
+                  }),
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(this.userNumber) +
+                      "\n                        "
+                  ),
+                ]),
                 _vm._v(" "),
-                _vm._m(2),
+                _vm._m(1),
               ]),
               _vm._v(" "),
               _c(
                 "div",
                 { staticClass: "modal-body" },
                 [
-                  _vm._m(3),
+                  _vm._m(2),
                   _vm._v(" "),
                   _vm._l(_vm.historyMessages, function (message) {
                     return _c(
@@ -40347,7 +40386,9 @@ var render = function () {
                                     staticClass: "chat-bigimg",
                                     attrs: {
                                       src: __webpack_require__(/*! ../../images/profile/profile_photo_10.png */ "./resources/js/images/profile/profile_photo_10.png"),
+                                      "data-username": message.user.name,
                                     },
+                                    on: { click: _vm.clickOthersIcon },
                                   }),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "chat-box" }, [
@@ -40388,9 +40429,9 @@ var render = function () {
               ),
               _vm._v(" "),
               _c("div", { staticClass: "talkbox-down w-h-space-evenly" }, [
-                _vm._m(4),
+                _vm._m(3),
                 _vm._v(" "),
-                _vm._m(5),
+                _vm._m(4),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -40437,7 +40478,7 @@ var render = function () {
             ]),
           ]),
           _vm._v(" "),
-          _vm._m(6),
+          _vm._m(5),
         ]
       ),
     ]),
@@ -40472,17 +40513,6 @@ var staticRenderFns = [
           ]
         ),
       ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "m-people w-h-start" }, [
-      _c("img", {
-        attrs: { src: __webpack_require__(/*! ../../images/chat/chat_icon_people.svg */ "./resources/js/images/chat/chat_icon_people.svg") },
-      }),
-      _vm._v("\n                            99+\n                        "),
     ])
   },
   function () {
