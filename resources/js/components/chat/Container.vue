@@ -142,7 +142,7 @@
                                 <img
                                     src="../../images/chat/chat_icon_people.svg"
                                 />
-                                99+
+                                {{ this.userNumber }}
                             </div>
                             <!-- modal 關閉按鈕 -->
                             <button
@@ -230,6 +230,8 @@
                                         <img
                                             src="../../images/profile/profile_photo_10.png"
                                             class="chat-bigimg"
+                                            @click="clickOthersIcon"
+                                            :data-username="message.user.name"
                                         />
                                         <div class="chat-box">
                                             <p>
@@ -313,11 +315,14 @@
 export default {
     data() {
         return {
+            nowChannelName: "",
             channels: [],
             channel: 1,
             message: "",
             historyMessages: [],
             userId: 0,
+            userNumber: 0,
+            timeToGetChannelStatus: 0,
         };
     },
     methods: {
@@ -374,13 +379,25 @@ export default {
                 });
         },
         getChannelStatus() {
+            // console.log(moment().format("YYYY/MM/DD HH:mm"));
+            // 取得特定頻道的資訊 test-event 可替換成其他頻道名稱
+            // "http://dd.dd:6001/apps/4e8ab2c4f7f32951/channels/test-event?auth_key=0e08c64a779309b7afcc17a2d8b9268d"
             axios
-                .get("/apps/test-event/status", {
-                    //
-                })
+                .get(
+                    "http://dd.dd:6001/apps/4e8ab2c4f7f32951/status?auth_key=0e08c64a779309b7afcc17a2d8b9268d",
+                    {
+                        //
+                    }
+                )
                 .then((e) => {
                     // 取得 laravel echo server status
                     console.log(e);
+                    // 現在聊天室人數 100 以上就顯示 99+
+                    let nowUsersNumber =
+                        e.data.subscription_count > 99
+                            ? "99+"
+                            : e.data.subscription_count;
+                    this.userNumber = nowUsersNumber;
                 })
                 .catch((error) => {
                     console.log(error);
@@ -400,7 +417,17 @@ export default {
             // return result;
             // moment.js 的作法
             //
-            return moment(date).format('YYYY-MM-DD HH:mm:ss');
+            return moment(date).format("YYYY/MM/DD HH:mm");
+            //
+        },
+        clickOthersIcon(e) {
+            // 點擊他人頭像後 input 欄位變成 @ 該頭像使用者
+            console.log(e.target.dataset.username);
+            // console.log(e.target.nextElementSibling); // 抓同一層的下一個元素
+            const targetName = e.target.dataset.username;
+            this.message = `@${targetName} `;
+            //
+            // return moment(date).format("YYYY/MM/DD HH:mm");
             //
         },
     },
@@ -413,6 +440,14 @@ export default {
 
         // 取得會員ID
         this.getUserId();
+
+        // 取得頻道資訊
+        this.getChannelStatus();
+
+        // 定時取得頻道資訊 : 目前 10 秒取得一次
+        this.timeToGetChannelStatus = setInterval(() => {
+            this.getChannelStatus();
+        }, 30 * 1000);
 
         // 創建 Echo 監聽
         Echo.channel("test-event").listen("BroadcastEvent", (e) => {
